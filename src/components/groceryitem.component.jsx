@@ -1,9 +1,9 @@
-const GroceryItem = ({ name }) => {
-  return <div>
-      <div>
-          
-      </div>
+const GroceryItem = ({ name }, key) => {
+  return (
+    <div>
+      <div></div>
       {name}
-      </div>;
+    </div>
+  );
 };
 export default GroceryItem;

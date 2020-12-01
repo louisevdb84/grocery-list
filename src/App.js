@@ -1,4 +1,4 @@
-import './App.css';
+//import './App.css';
 import Groceries from './pages/groceries.page';
 
 function App() {
