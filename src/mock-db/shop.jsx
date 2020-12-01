@@ -1,4 +1,4 @@
-const stores = [
+const shops = [
   {
     id: 1,
     name: "Lidl",
@@ -9,4 +9,4 @@ const stores = [
   },
 ];
 
-export default stores;
+export default shops;

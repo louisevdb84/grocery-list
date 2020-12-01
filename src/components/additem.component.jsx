@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import MultiSelect from "react-multi-select-component";
-import Stores from "../mock-db/store";
+import Shops from "../mock-db/shop";
 
 const AddItem = () => {
   const [newitem, setNewitem] = useState("");
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([{ label: "Lidl", value: 1 }]);
 
   const handleChange = (event) => {
     setNewitem(event.target.value);
   };
 
   const handleSubmit = (event) => {
-    alert(newitem);
-    alert(selected);
     setNewitem("");
     event.preventDefault();
   };
 
-  const options = Stores.map((store) => {
-    return { label: store.name, value: store.id };
+  const options = Shops.map((shop) => {
+    return { label: shop.name, value: shop.id };
   });
 
   return (

@@ -1,18 +1,18 @@
 import user from "./user";
-import stores from "./store";
+import shops from "./shop";
 
 const items = [
   {
     id: 1,
     name: "Bread",
     user: user[0],
-    stores: stores,
+    shops: shops,
   },
   {
     id: 2,
     name: "Milk",
     user: user[0],
-    stores: stores,
+    shops: shops,
   },
 ];
 
