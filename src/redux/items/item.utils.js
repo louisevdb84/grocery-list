@@ -3,8 +3,8 @@ export const utils_addItems = (items, itemToAdd) => {
         item=> item.name === itemToAdd.name
     );
 
-    if(existingItem){
-        console.log("Item is already added");
+    if(existingItem){        
+        alert("Item is already added")
         return items;        
     }
     return [...items, itemToAdd];

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import addItem from "../redux/items/item.actions";
 import MultiSelect from "react-multi-select-component";
 import Shops from "../mock-db/shop";
 
-const AddItem = () => {
+const AddItem = ({ addItem }) => {
   const [newitem, setNewitem] = useState("");
   const [selected, setSelected] = useState([{ label: "Lidl", value: 1 }]);
 
@@ -10,7 +12,16 @@ const AddItem = () => {
     setNewitem(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => {    
+    addItem({
+      id: Math.floor(Math.random() * 100),
+      name: newitem,
+      shops: {
+        id: Math.floor(Math.random() * 100),
+        name: selected.label,
+      },
+    });
+
     setNewitem("");
     event.preventDefault();
   };
@@ -41,4 +52,9 @@ const AddItem = () => {
     </div>
   );
 };
-export default AddItem;
+
+const mapDispatchToProps = (dispatch) => ({
+  addItem: (item) => dispatch(addItem(item)),
+});
+
+export default connect(null, mapDispatchToProps)(AddItem);
