@@ -1,16 +1,16 @@
 import ItemActionTypes from './item.types';
-import { addItems } from './item.utils';
+import { utils_addItems } from './item.utils';
 
 const INITIAL_STATE = {
     items: []
 };
 
-const itemReducer = (state = INITIAL_STATE, action) => {
+const itemReducer = (state = INITIAL_STATE, action) => {    
     switch (action.type){
         case ItemActionTypes.ADD_ITEM:
             return {
                 ...state,
-                items: addItems
+                items: utils_addItems(state.items, action.payload)
             };
              default: 
              return state;
