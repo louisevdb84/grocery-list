@@ -1,11 +1,18 @@
 import AddItem from "../components/additem.component";
 import GroceryList from "../components/grocerylist.component";
+import { Paper, Container } from "@material-ui/core";
 
-const Groceries = () => {  
+const Groceries = () => {
   return (
-    <div className="App">
-      <AddItem></AddItem>
-      <GroceryList></GroceryList>
+    <div style={{paddingTop: "5%"}}>
+    <Container>
+      <Paper>
+      <Container>
+        <AddItem></AddItem>
+        <GroceryList></GroceryList>        
+        </Container>
+      </Paper>
+    </Container>
     </div>
   );
 };

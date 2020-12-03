@@ -6,7 +6,7 @@ const items = [
     id: 1,
     name: "Bread",
     user: user[0],
-    shops: shops,
+    shops: [shops[0]],
   },
   {
     id: 2,
