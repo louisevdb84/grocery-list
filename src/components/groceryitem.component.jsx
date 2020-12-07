@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 
-export default function GroceryItem({ name, id }) {
+export default function GroceryItem({ name, id, shop }) {
   const [checked, setChecked] = useState([0]);
 
   const handleToggle = (value) => () => {
@@ -43,9 +43,11 @@ export default function GroceryItem({ name, id }) {
         id={labelId}
         primary={name}
       />
-      {/* {shop? shop.map((shop, key) => {
-        return <ListItemText id={key} key={key} primary={shop.name} />;
-      }): null} */}
+      {shop
+        ? shop.map((shop, key) => {
+            return <ListItemText id={key} key={key} primary={shop.name} />;
+          })
+        : null}
 
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete">

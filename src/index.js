@@ -12,6 +12,8 @@ import {createHttpLink} from 'apollo-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloClient, gql} from 'apollo-boost';
 
+import {resolvers, typeDefs} from './graphql/resolvers';
+
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql'
   
@@ -21,9 +23,16 @@ const cache = new InMemoryCache();
 
 const client = new ApolloClient({
   link: httpLink,
-  cache
+  cache, 
+  typeDefs,
+  resolvers
 });
 
+// client.writeData({
+//   data: {
+//     items: []
+//   }
+// })
 
 client.query({
   query: gql`
