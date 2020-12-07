@@ -39,7 +39,11 @@ export default function GroceryItem({ name, id, shops }) {
           inputProps={{ "aria-labelledby": labelId }}
         />
       </ListItemIcon>
-      <ListItemText id={labelId} primary={name} />
+      <ListItemText
+        style={{ fontWeight: "bold", color: "red" }}
+        id={labelId}
+        primary={name}
+      />
       {shops.map((shop, key) => {
         return <ListItemText id={key} key={key} primary={shop.name} />;
       })}

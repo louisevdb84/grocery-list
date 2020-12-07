@@ -7,12 +7,50 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import {store} from './redux/store';
 
+import {ApolloProvider} from 'react-apollo';
+import {createHttpLink} from 'apollo-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloClient, gql} from 'apollo-boost';
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000/graphql'
+  
+});
+
+const cache = new InMemoryCache();
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache
+});
+
+
+client.query({
+  query: gql`
+  {
+    
+      items
+      {
+        id
+        name    
+        shop{
+          id
+          name      
+        }
+      }
+    
+  }
+  `
+}).then(res => console.log(res));
+
 ReactDOM.render(
+  <ApolloProvider client = {client}>
   <Provider store={store}>
   <React.StrictMode>    
     <App />
   </React.StrictMode>
-  </Provider>,
+  </Provider>
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
