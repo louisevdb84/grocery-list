@@ -1,5 +1,4 @@
 import GroceryItem from "./groceryitem.component";
-import { connect } from "react-redux";
 import { Card, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -27,8 +26,4 @@ const GroceryList = ({ items }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  items: state.item.items,
-});
-
-export default connect(mapStateToProps)(GroceryList);
+export default GroceryList;

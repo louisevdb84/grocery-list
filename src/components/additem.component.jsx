@@ -15,14 +15,14 @@ const AddItem = ({ addItem }) => {
 
   const handleSubmit = (event) => {
     let shoparray = (selecteditems) => {
-      console.log("Selected", selecteditems);
+      
 
       return selecteditems.map((selectedshop) => ({
         id: selectedshop.value,
         name: selectedshop.label,
       }));
     };
-    console.log(shoparray(selected));
+    
     addItem({
       id: Math.floor(Math.random() * 100),
       name: newitem,

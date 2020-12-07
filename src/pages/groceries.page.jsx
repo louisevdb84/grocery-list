@@ -1,18 +1,19 @@
 import AddItem from "../components/additem.component";
-import GroceryList from "../components/grocerylist.component";
 import { Paper, Container } from "@material-ui/core";
+import ItemsContainer from "../containers/items.container";
+
 
 const Groceries = () => {
   return (
-    <div style={{paddingTop: "5%"}}>
-    <Container>
-      <Paper>
+    <div style={{ paddingTop: "5%" }}>
       <Container>
-        <AddItem></AddItem>
-        <GroceryList></GroceryList>        
-        </Container>
-      </Paper>
-    </Container>
+        <Paper>
+          <Container>
+            <AddItem></AddItem>
+            <ItemsContainer></ItemsContainer>           
+          </Container>
+        </Paper>
+      </Container>
     </div>
   );
 };

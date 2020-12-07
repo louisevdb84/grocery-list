@@ -41,7 +41,7 @@ client.query({
     
   }
   `
-}).then(res => console.log(res));
+}).then(res => null);
 
 ReactDOM.render(
   <ApolloProvider client = {client}>

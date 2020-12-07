@@ -4,7 +4,7 @@ export const utils_addItems = (items, itemToAdd) => {
     );
 
     if(existingItem){        
-        alert("Item is already added")
+        console.log("Item is already added")
         return items;        
     }
     return [...items, itemToAdd];
