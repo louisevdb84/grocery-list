@@ -8,9 +8,29 @@ import {
   Checkbox,
   IconButton,
 } from "@material-ui/core";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+
+const DELETE_ITEM = gql`
+  mutation deleteItem($_id: String!) {
+    deleteItem(_id: $_id) {
+      name
+    }
+  }
+`;
 
 export default function GroceryItem({ name, id, shop }) {
+  const [deleteItem] = useMutation(DELETE_ITEM);
   const [checked, setChecked] = useState([0]);
+
+  const deletethisitem = () => {
+    deleteItem({
+      variables: {
+        _id: id,
+      },
+    });
+    window.location.reload();
+  };
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -50,7 +70,7 @@ export default function GroceryItem({ name, id, shop }) {
         : null}
 
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="delete">
+        <IconButton onClick={deletethisitem} edge="end" aria-label="delete">
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>
