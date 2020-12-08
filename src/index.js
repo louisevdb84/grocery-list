@@ -4,9 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Provider } from 'react-redux';
-import {store} from './redux/store';
-
 import {ApolloProvider} from 'react-apollo';
 import {createHttpLink} from 'apollo-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
@@ -54,11 +51,9 @@ client.query({
 
 ReactDOM.render(
   <ApolloProvider client = {client}>
-  <Provider store={store}>
-  <React.StrictMode>    
+    <React.StrictMode>    
     <App />
-  </React.StrictMode>
-  </Provider>
+  </React.StrictMode>  
   </ApolloProvider>,
   document.getElementById('root')
 );
