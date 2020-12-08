@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import addItem from "../redux/items/item.actions";
 import MultiSelect from "react-multi-select-component";
 import Shops from "../mock-db/shop";
 import { Button, Grid, TextField } from "@material-ui/core";
@@ -15,14 +13,12 @@ const AddItem = ({ addItem }) => {
 
   const handleSubmit = (event) => {
     let shoparray = (selecteditems) => {
-      
-
       return selecteditems.map((selectedshop) => ({
         id: selectedshop.value,
         name: selectedshop.label,
       }));
     };
-    
+
     addItem({
       id: Math.floor(Math.random() * 100),
       name: newitem,
@@ -74,8 +70,4 @@ const AddItem = ({ addItem }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addItem: (item) => dispatch(addItem(item)),
-});
-
-export default connect(null, mapDispatchToProps)(AddItem);
+export default AddItem;

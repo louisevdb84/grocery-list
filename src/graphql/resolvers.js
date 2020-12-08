@@ -8,30 +8,26 @@ export const typeDefs = gql `
     }
 `;
 
-const GET_CART_ITEMS = gql`
+const GET_ITEMS = gql`
   {
-    cartItems @client
+    items @client
   }
 `;
 
 export const resolvers = {
-    Mutation: {
-     
+    Mutation: {     
       addItem: (_root, { item }, { cache }) => {
-        const { cartItems } = cache.readQuery({
-          query: GET_CART_ITEMS
+        const { items } = cache.readQuery({
+          query: GET_ITEMS
         });
   
-        const newCartItems = utils_addItems(cartItems, item);
-  
-
-  
+        const newItems = utils_addItems(items, item);
         cache.writeQuery({
-          query: GET_CART_ITEMS,
-          data: { cartItems: newCartItems }
+          query: GET_ITEMS,
+          data: { items: newItems }
         });
   
-        return newCartItems;
+        return newItems;
       }
     }
   };

@@ -1,7 +1,6 @@
-import AddItem from "../components/additem.component";
+import AddItemContainer from "../containers/add-item.container";
 import { Paper, Container } from "@material-ui/core";
 import ItemsContainer from "../containers/items.container";
-
 
 const Groceries = () => {
   return (
@@ -9,7 +8,7 @@ const Groceries = () => {
       <Container>
         <Paper>
           <Container>
-            <AddItem></AddItem>
+            <AddItemContainer></AddItemContainer>
             <ItemsContainer></ItemsContainer>           
           </Container>
         </Paper>
