@@ -50,10 +50,8 @@ client.query({
 }).then(res => null);
 
 ReactDOM.render(
-  <ApolloProvider client = {client}>
-    <React.StrictMode>    
-    <App />
-  </React.StrictMode>  
+  <ApolloProvider client = {client}>    
+    <App />  
   </ApolloProvider>,
   document.getElementById('root')
 );
