@@ -1,5 +1,5 @@
 import ItemActionTypes from './item.types';
-import { utils_addItems } from './item.utils';
+import { utils_addItems } from '../../graphql/item.utils';
 
 const INITIAL_STATE = {
     items: []
