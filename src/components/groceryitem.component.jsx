@@ -56,6 +56,7 @@ export default function GroceryItem({ name, id, shop }) {
           tabIndex={-1}
           disableRipple
           inputProps={{ "aria-labelledby": labelId }}
+          onClick={deletethisitem}
         />
       </ListItemIcon>
       <ListItemText
