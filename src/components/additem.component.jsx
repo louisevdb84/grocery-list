@@ -2,8 +2,24 @@ import React, { useState } from "react";
 import MultiSelect from "react-multi-select-component";
 import Shops from "../mock-db/shop";
 import { Button, Grid, TextField } from "@material-ui/core";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 
-const AddItem = ({ addItem }) => {
+const ADD_ITEM = gql`
+  mutation addItem_API {
+    addItem_API(name: "Chocolates", shopID: "5fce2f4eab840e4bccbd56c0") {
+      id
+      name
+      shop {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const AddItem = () => {
+  const [addItem_API] = useMutation(ADD_ITEM);
   const [newitem, setNewitem] = useState("");
   const [selected, setSelected] = useState([{ label: "Lidl", value: 1 }]);
 
@@ -19,10 +35,11 @@ const AddItem = ({ addItem }) => {
       }));
     };
 
-    addItem({
-      id: Math.floor(Math.random() * 100),
-      name: newitem,
-      shops: shoparray(selected),
+    addItem_API({
+      variables: {
+        name: newitem,
+        shops: shoparray(selected),
+      },
     });
 
     setNewitem("");
