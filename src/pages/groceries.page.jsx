@@ -28,28 +28,39 @@ const GET_SHOPS = gql`
 `;
 
 const Groceries = () => {
-  let { data, loading, error } = useQuery(GET_ITEMS);
+  const { data, loading, error } = useQuery(GET_ITEMS);
   const getshops = useQuery(GET_SHOPS);
 
   const dataShops = getshops.data;
   const [selectedShop, setSelectedShop] = useState("");
+  let [dataItems, setDataItems] = useState();
 
   if (loading) return <p>loading...</p>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
-  dataShops ? console.log("SHOPS", dataShops) : console.log("NOT SHOP");
-
-  if (data) {
-    data.items = data.items.filter((item) => {
-      console.log(item);
-      return item.shop;
-    });
-    console.log(data, "WITHIN");
+  if (data && !dataItems) {
+    setDataItems(data.items);
   }
 
   const handleChange = (event) => {
     setSelectedShop(event.target.value);
+
+    if (data && event.target.value) {
+      let existingshop = null;
+      setDataItems(
+        data.items.filter((item) => {
+          if (item.shop) {
+            existingshop = item.shop.filter(
+              (shop) => shop.id === event.target.value
+            );
+          }          
+          return existingshop.length > 0 ? item : null;
+        })
+      );
+
+      
+    }
   };
 
   return (
@@ -74,7 +85,7 @@ const Groceries = () => {
           </Select>
           <Container>
             <AddItem></AddItem>
-            <GroceryList items={data.items}></GroceryList>
+            <GroceryList items={dataItems}></GroceryList>
           </Container>
         </Paper>
       </Container>
