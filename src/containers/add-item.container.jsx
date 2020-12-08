@@ -10,7 +10,6 @@ const ADD_ITEM = gql`
 `;
 
 const AddItemContainer = (props) => {
-  console.log(ADD_ITEM);
   return (
     <Mutation mutation={ADD_ITEM}>
       {(addItem) => (
