@@ -9,15 +9,18 @@ const ADD_ITEM = gql`
   }
 `;
 
-const AddItemContainer = (props) => (
-  <Mutation mutation={ADD_ITEM}>
-    {(addItem) => (
-      <AddItem
-        {...props}
-        addItem={(item) => addItem({ variables: { item } })}
-      ></AddItem>
-    )}
-  </Mutation>
-);
+const AddItemContainer = (props) => {
+  console.log(ADD_ITEM);
+  return (
+    <Mutation mutation={ADD_ITEM}>
+      {(addItem) => (
+        <AddItem
+          {...props}
+          addItem={(item) => addItem({ variables: { item } })}
+        ></AddItem>
+      )}
+    </Mutation>
+  );
+};
 
 export default AddItemContainer;
