@@ -1,4 +1,3 @@
-
 import { Paper, Container } from "@material-ui/core";
 import GroceryList from "../components/grocerylist.component";
 import { useQuery } from "@apollo/react-hooks";

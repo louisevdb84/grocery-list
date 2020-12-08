@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import MultiSelect from "react-multi-select-component";
-import Shops from "../mock-db/shop";
+// import Shops from "../mock-db/shop";
 import { Button, Grid, TextField } from "@material-ui/core";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 const ADD_ITEM = gql`
-  mutation addItem_API {
-    addItem_API(name: "Chocolates", shopID: "5fce2f4eab840e4bccbd56c0") {
+  mutation addItem_API($name: String!, $shopID: [String]) {
+    addItem_API(name: $name, shopID: $shopID) {
       id
       name
       shop {
@@ -18,10 +18,26 @@ const ADD_ITEM = gql`
   }
 `;
 
+const GET_SHOPS = gql`
+  query getShops {
+    shops {
+      id
+      name
+
+      item {
+        id
+        name
+      }
+    }
+  }
+`;
+
 const AddItem = () => {
+  const { data } = useQuery(GET_SHOPS);
+
   const [addItem_API] = useMutation(ADD_ITEM);
   const [newitem, setNewitem] = useState("");
-  const [selected, setSelected] = useState([{ label: "Lidl", value: 1 }]);
+  const [selected, setSelected] = useState();
 
   const handleChange = (event) => {
     setNewitem(event.target.value);
@@ -29,26 +45,24 @@ const AddItem = () => {
 
   const handleSubmit = (event) => {
     let shoparray = (selecteditems) => {
-      return selecteditems.map((selectedshop) => ({
-        id: selectedshop.value,
-        name: selectedshop.label,
-      }));
+      return selecteditems.map((selectedshop) => selectedshop.value);
     };
-
     addItem_API({
       variables: {
         name: newitem,
-        shops: shoparray(selected),
+        shopID: shoparray(selected),
       },
     });
 
     setNewitem("");
     event.preventDefault();
+    window.location.reload();
   };
-
-  const options = Shops.map((shop) => {
-    return { label: shop.name, value: shop.id };
-  });
+  const options = data
+    ? data.shops.map((shop) => {
+        return { label: shop.name, value: shop.id };
+      })
+    : { label: "Loading", value: "1" };
 
   return (
     <div>
