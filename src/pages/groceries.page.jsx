@@ -32,7 +32,12 @@ const Groceries = () => {
   const getshops = useQuery(GET_SHOPS);
 
   const dataShops = getshops.data;
-  const [selectedShop, setSelectedShop] = useState("");
+  const [selectedShop, setSelectedShop] = useState(
+    localStorage.getItem("selectedshop")
+      ? localStorage.getItem("selectedshop")
+      : ""
+  );
+
   let [dataItems, setDataItems] = useState();
 
   if (loading) return <p>loading...</p>;
@@ -45,7 +50,7 @@ const Groceries = () => {
 
   const handleChange = (event) => {
     setSelectedShop(event.target.value);
-
+    localStorage.setItem("selectedshop", event.target.value);
     if (data && event.target.value) {
       let existingshop = null;
       setDataItems(
@@ -54,12 +59,10 @@ const Groceries = () => {
             existingshop = item.shop.filter(
               (shop) => shop.id === event.target.value
             );
-          }          
+          }
           return existingshop.length > 0 ? item : null;
         })
       );
-
-      
     }
   };
 
