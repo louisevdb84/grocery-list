@@ -28,8 +28,7 @@ export default function GroceryItem({ name, id, shop }) {
       variables: {
         _id: id,
       },
-    });
-    window.location.reload();
+    }).then(() => window.location.reload());
   };
 
   const handleToggle = (value) => () => {

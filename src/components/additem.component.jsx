@@ -53,11 +53,11 @@ const AddItem = () => {
         name: newitem,
         shopID: shoparray(selected),
       },
-    });
+    }).then(()=>window.location.reload());
 
     setNewitem("");
     event.preventDefault();
-    window.location.reload();
+    
   };
   const options = data
     ? data.shops.map((shop) => {
