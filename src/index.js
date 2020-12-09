@@ -12,7 +12,7 @@ import {ApolloClient, gql} from 'apollo-boost';
 import {resolvers, typeDefs} from './graphql/resolvers';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql'
+  uri: 'https://grocery-list-louise.herokuapp.com/graphql'
   
 });
 
@@ -30,7 +30,6 @@ const client = new ApolloClient({
 //     items: []
 //   }
 // })
-
 client.query({
   query: gql`
   {
