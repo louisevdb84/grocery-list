@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
+import LocalShippingIcon  from "@material-ui/icons/LocalShipping";
 import {
   ListItem,
   ListItemIcon,
@@ -19,12 +20,51 @@ const DELETE_ITEM = gql`
   }
 `;
 
+const UPDATE_COMPLETED = gql`
+  mutation updateCompletedItem($_id: String!) {
+    updateCompletedItem(_id: $_id) {
+      name
+    }
+  }
+`;
+
+const UPDATE_ORDERED = gql`
+  mutation updateOrderedItem($_id: String!) {
+    updateOrderedItem(_id: $_id) {
+      name
+    }
+  }
+`;
+
 export default function GroceryItem({ name, id, shop }) {
   const [deleteItem] = useMutation(DELETE_ITEM);
+  const [updateCompletedItem] = useMutation(UPDATE_COMPLETED);
+  const [updateOrderedItem] = useMutation(UPDATE_ORDERED);
   const [checked, setChecked] = useState([0]);
 
   const deletethisitem = () => {
-    deleteItem({
+    const deleteConfirm = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (deleteConfirm) {
+      deleteItem({
+        variables: {
+          _id: id,
+        },
+      }).then(() => window.location.reload());
+    }
+  };
+
+  const markascompleted = () => {
+    updateCompletedItem({
+      variables: {
+        _id: id,
+      },
+    }).then(() => window.location.reload());
+  };
+
+  const markasordered = () => {
+    updateOrderedItem({
       variables: {
         _id: id,
       },
@@ -55,21 +95,24 @@ export default function GroceryItem({ name, id, shop }) {
           tabIndex={-1}
           disableRipple
           inputProps={{ "aria-labelledby": labelId }}
-          onClick={deletethisitem}
+          onClick={markascompleted}
         />
       </ListItemIcon>
       <ListItemText
-        style={{ fontWeight: "bold", color: "red" }}
+        style={{ fontWeight: "bold" }}
         id={labelId}
         primary={name}
       />
-      {shop
+      {/* {shop
         ? shop.map((shop, key) => {
             return <ListItemText id={key} key={key} primary={shop.name} />;
           })
-        : null}
+        : null} */}
 
       <ListItemSecondaryAction>
+        <IconButton onClick={markasordered} edge="end" aria-label="ordered">
+          <LocalShippingIcon />
+        </IconButton>
         <IconButton onClick={deletethisitem} edge="end" aria-label="delete">
           <DeleteIcon />
         </IconButton>

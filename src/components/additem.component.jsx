@@ -46,14 +46,20 @@ const AddItem = () => {
     let shoparray = (selecteditems) => {
       return selecteditems.map((selectedshop) => selectedshop.value);
     };
-    addItem_API({
-      variables: {
-        name: newitem,
-        shopID: shoparray(selected),
-      },
-    }).then(() => window.location.reload());
 
-    setNewitem("");
+    if (selected && selected.length > 0) {
+      addItem_API({
+        variables: {
+          name: newitem,
+          shopID: shoparray(selected),
+        },
+      }).then(() => window.location.reload());
+
+      setNewitem("");
+    } else {
+      alert("Select a shop");
+    }
+
     event.preventDefault();
   };
   const options = data
@@ -86,8 +92,6 @@ const AddItem = () => {
               labelledBy={"Select"}
             />
           </Grid>
-
-          {/* <pre>{JSON.stringify(selected)}</pre> */}
           <Grid item xs={12} sm={3}>
             <Button variant="contained" color="primary" type="submit">
               Add item
