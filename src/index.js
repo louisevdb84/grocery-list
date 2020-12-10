@@ -11,8 +11,9 @@ import {ApolloClient, gql} from 'apollo-boost';
 
 import {resolvers, typeDefs} from './graphql/resolvers';
 
+
 const httpLink = createHttpLink({
-  uri: 'https://grocery-list-louise.herokuapp.com/graphql'
+  uri: process.env.NODE_ENV==="development"? 'http://localhost:4000/graphql':'https://grocery-list-louise.herokuapp.com/graphql'
   
 });
 

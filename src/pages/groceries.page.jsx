@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Paper, Container, Select, MenuItem } from "@material-ui/core";
 import GroceryList from "../components/grocerylist.component";
 import { useQuery } from "@apollo/react-hooks";
@@ -28,6 +28,20 @@ const GET_SHOPS = gql`
 `;
 
 const Groceries = () => {
+  const filterData = (value) => {
+    if (data && value) {
+      let existingshop = null;
+      setDataItems(
+        data.items.filter((item) => {
+          if (item.shop) {
+            existingshop = item.shop.filter((shop) => shop.id === value);
+          }
+          return existingshop.length > 0 ? item : null;
+        })
+      );
+    }
+  };
+
   const { data, loading, error } = useQuery(GET_ITEMS);
   const getshops = useQuery(GET_SHOPS);
 
@@ -39,6 +53,14 @@ const Groceries = () => {
   );
 
   let [dataItems, setDataItems] = useState();
+  useEffect(() => {
+    filterData(
+      localStorage.getItem("selectedshop")
+        ? localStorage.getItem("selectedshop")
+        : null
+    );
+    // eslint-disable-next-line
+  }, [data]);
 
   if (loading) return <p>loading...</p>;
   if (error) return <p>ERROR</p>;
@@ -51,19 +73,7 @@ const Groceries = () => {
   const handleChange = (event) => {
     setSelectedShop(event.target.value);
     localStorage.setItem("selectedshop", event.target.value);
-    if (data && event.target.value) {
-      let existingshop = null;
-      setDataItems(
-        data.items.filter((item) => {
-          if (item.shop) {
-            existingshop = item.shop.filter(
-              (shop) => shop.id === event.target.value
-            );
-          }
-          return existingshop.length > 0 ? item : null;
-        })
-      );
-    }
+    filterData(event.target.value);
   };
 
   return (
