@@ -31,14 +31,18 @@ const Groceries = () => {
   const filterData = (value) => {
     if (data && value) {
       let existingshop = null;
-      setDataItems(
-        data.items.filter((item) => {
-          if (item.shop) {
-            existingshop = item.shop.filter((shop) => shop.id === value);
-          }
-          return existingshop.length > 0 ? item : null;
-        })
-      );
+      if (value === "0") {
+        setDataItems(data.items);
+      } else {
+        setDataItems(
+          data.items.filter((item) => {
+            if (item.shop) {
+              existingshop = item.shop.filter((shop) => shop.id === value);
+            }
+            return existingshop.length > 0 ? item : null;
+          })
+        );
+      }
     }
   };
 
@@ -86,6 +90,7 @@ const Groceries = () => {
             value={selectedShop}
             onChange={handleChange}
           >
+            <MenuItem value="0">All</MenuItem>
             {dataShops ? (
               dataShops.shops.map((shop) => (
                 <MenuItem key={shop.id} value={shop.id}>

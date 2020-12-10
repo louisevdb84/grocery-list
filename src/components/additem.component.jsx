@@ -18,8 +18,6 @@ const ADD_ITEM = gql`
   }
 `;
 
-
-
 const GET_SHOPS = gql`
   query getShops {
     shops {
@@ -38,12 +36,12 @@ const AddItem = () => {
   const { data } = useQuery(GET_SHOPS);
   const [addItem_API] = useMutation(ADD_ITEM);
   const [newitem, setNewitem] = useState("");
-  const [selected, setSelected] = useState([{label: "Lidl", value: "5fce3ca6f4c14e1b0d1cc061"}]);
+  const [selected, setSelected] = useState();
 
   const handleChange = (event) => {
     setNewitem(event.target.value);
   };
-  
+
   const handleSubmit = (event) => {
     let shoparray = (selecteditems) => {
       return selecteditems.map((selectedshop) => selectedshop.value);
@@ -53,11 +51,10 @@ const AddItem = () => {
         name: newitem,
         shopID: shoparray(selected),
       },
-    }).then(()=>window.location.reload());
+    }).then(() => window.location.reload());
 
     setNewitem("");
     event.preventDefault();
-    
   };
   const options = data
     ? data.shops.map((shop) => {
