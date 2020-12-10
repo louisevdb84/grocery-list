@@ -10,6 +10,8 @@ const GET_ITEMS = gql`
     items {
       id
       name
+      completed
+      ordered
       shop {
         id
         name
@@ -103,8 +105,28 @@ const Groceries = () => {
           </Select>
           <Container>
             <AddItem></AddItem>
-            <GroceryList items={dataItems}></GroceryList>
+            <h1>ITEMS</h1>
+            <GroceryList
+              items={
+                dataItems
+                  ? dataItems.filter((item) => !item.completed && !item.ordered)
+                  : dataItems
+              }
+            ></GroceryList>
           </Container>
+
+          <h1>ORDERED ITEMS</h1>
+          <GroceryList
+            items={
+              dataItems ? dataItems.filter((item) => item.ordered && !item.completed) : dataItems
+            }
+          ></GroceryList>
+          <h1>DONE ITEMS</h1>
+          <GroceryList
+            items={
+              dataItems ? dataItems.filter((item) => item.completed) : dataItems
+            }
+          ></GroceryList>
         </Paper>
       </Container>
     </div>

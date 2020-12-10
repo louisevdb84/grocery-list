@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
-import LocalShippingIcon  from "@material-ui/icons/LocalShipping";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import {
   ListItem,
   ListItemIcon,
@@ -36,7 +36,8 @@ const UPDATE_ORDERED = gql`
   }
 `;
 
-export default function GroceryItem({ name, id, shop }) {
+export default function GroceryItem({ name, id, completed, ordered }) {
+  console.log(completed, ordered, "STUFF");
   const [deleteItem] = useMutation(DELETE_ITEM);
   const [updateCompletedItem] = useMutation(UPDATE_COMPLETED);
   const [updateOrderedItem] = useMutation(UPDATE_ORDERED);
@@ -99,7 +100,10 @@ export default function GroceryItem({ name, id, shop }) {
         />
       </ListItemIcon>
       <ListItemText
-        style={{ fontWeight: "bold" }}
+        style={{
+          fontWeight: "bold",
+          textDecoration: completed || ordered ? "line-through" : "none",
+        }}
         id={labelId}
         primary={name}
       />
