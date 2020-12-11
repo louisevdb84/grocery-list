@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import {
   ListItem,
@@ -11,10 +12,19 @@ import {
 } from "@material-ui/core";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import SimpleModal from "./modal.component";
 
 const DELETE_ITEM = gql`
   mutation deleteItem($_id: String!) {
     deleteItem(_id: $_id) {
+      name
+    }
+  }
+`;
+
+const EDIT_ITEM = gql`
+  mutation editItem($_id: String!, $name: String!, $shopID: [String]) {
+    editItem(_id: $_id, name: $name, shopID: $shopID) {
       name
     }
   }
@@ -36,11 +46,22 @@ const UPDATE_ORDERED = gql`
   }
 `;
 
-export default function GroceryItem({ name, id, completed, ordered }) {
+export default function GroceryItem({ name, id, completed, ordered, shopID }) {
   const [deleteItem] = useMutation(DELETE_ITEM);
   const [updateCompletedItem] = useMutation(UPDATE_COMPLETED);
   const [updateOrderedItem] = useMutation(UPDATE_ORDERED);
+  const [editItem] = useMutation(EDIT_ITEM);
   const [checked, setChecked] = useState([0]);
+
+  const edititem = () => {
+    editItem({
+      variables: {
+        _id: id,
+        name: "test",
+        shopID: shopID,
+      },
+    }).then(() => window.location.reload());
+  };
 
   const deletethisitem = () => {
     const deleteConfirm = window.confirm(
@@ -93,13 +114,22 @@ export default function GroceryItem({ name, id, completed, ordered }) {
       <ListItemIcon>
         <Checkbox
           edge="start"
-          checked={checked.indexOf(id) !== -1}
-          tabIndex={-1}
-          disableRipple
-          inputProps={{ "aria-labelledby": labelId }}
+          // checked={checked.indexOf(id) !== -1}
+          // tabIndex={-1}
+          // disableRipple
+          // inputProps={{ "aria-labelledby": labelId }}
           onClick={markascompleted}
         />
       </ListItemIcon>
+      <span>
+        <SimpleModal
+          OpenModal={
+            <IconButton onClick={edititem} edge="end" aria-label="ordered">
+              <EditIcon />
+            </IconButton>
+          }
+        ></SimpleModal>
+      </span>
       <ListItemText
         style={{
           fontWeight: "bold",
@@ -114,7 +144,12 @@ export default function GroceryItem({ name, id, completed, ordered }) {
           })
         : null} */}
 
+
+
+
+      
       <ListItemSecondaryAction>
+        
         <IconButton onClick={markasordered} edge="end" aria-label="ordered">
           <LocalShippingIcon />
         </IconButton>
