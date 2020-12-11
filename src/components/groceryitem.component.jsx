@@ -1,10 +1,8 @@
-import { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import {
   ListItem,
-  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
   Checkbox,
@@ -43,7 +41,6 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
   const [deleteItem] = useMutation(DELETE_ITEM);
   const [updateCompletedItem] = useMutation(UPDATE_COMPLETED);
   const [updateOrderedItem] = useMutation(UPDATE_ORDERED);
-  const [checked, setChecked] = useState([0]);
 
   const deletethisitem = () => {
     const deleteConfirm = window.confirm(
@@ -76,36 +73,13 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
     }).then(() => window.location.reload());
   };
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
   const labelId = `checkbox-list-label-${id}`;
 
   return (
-    <ListItem key={id} role={undefined} dense button onClick={handleToggle(id)}>
-      <ListItemIcon>
-        <Checkbox
-          edge="start"
-          checked={checked.indexOf(id) !== -1}
-          tabIndex={-1}
-          disableRipple
-          inputProps={{ "aria-labelledby": labelId }}
-          onClick={markascompleted}
-        />
-      </ListItemIcon>
-      <span>
-      
-      </span>
+    <ListItem key={id} role={undefined} dense button>
+      <Checkbox edge="start" onClick={markascompleted} />
+
+      <span></span>
       <ListItemText
         style={{
           fontWeight: "bold",
@@ -115,7 +89,7 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
         primary={name}
       />
       <ListItemSecondaryAction>
-      <SimpleModal
+        <SimpleModal
           OpenModal={
             <IconButton edge="end" aria-label="ordered">
               <EditIcon />
@@ -129,7 +103,6 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
         <IconButton onClick={deletethisitem} edge="end" aria-label="delete">
           <DeleteIcon />
         </IconButton>
-
       </ListItemSecondaryAction>
     </ListItem>
   );

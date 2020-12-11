@@ -20,7 +20,7 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 400,
+    width: "70%",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -43,8 +43,8 @@ export default function SimpleModal({ OpenModal, BodyModal }, props) {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>      
-      {BodyModal}     
+    <div style={modalStyle} className={classes.paper}>
+      {BodyModal}
     </div>
   );
 
@@ -59,8 +59,7 @@ export default function SimpleModal({ OpenModal, BodyModal }, props) {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-      >          
-        
+      >
         {body}
       </Modal>
     </>
