@@ -44,7 +44,7 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
 
   const deletethisitem = () => {
     const deleteConfirm = window.confirm(
-      "Are you sure you want to delete this item?"
+      `Are you sure you want to delete ${name}?`
     );
     if (deleteConfirm) {
       deleteItem({
