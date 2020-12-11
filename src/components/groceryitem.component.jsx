@@ -13,18 +13,11 @@ import {
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SimpleModal from "./modal.component";
+import EditItem from "./edititem.component";
 
 const DELETE_ITEM = gql`
   mutation deleteItem($_id: String!) {
     deleteItem(_id: $_id) {
-      name
-    }
-  }
-`;
-
-const EDIT_ITEM = gql`
-  mutation editItem($_id: String!, $name: String!, $shopID: [String]) {
-    editItem(_id: $_id, name: $name, shopID: $shopID) {
       name
     }
   }
@@ -46,22 +39,11 @@ const UPDATE_ORDERED = gql`
   }
 `;
 
-export default function GroceryItem({ name, id, completed, ordered, shopID }) {
+export default function GroceryItem({ name, id, completed, ordered, shop }) {
   const [deleteItem] = useMutation(DELETE_ITEM);
   const [updateCompletedItem] = useMutation(UPDATE_COMPLETED);
   const [updateOrderedItem] = useMutation(UPDATE_ORDERED);
-  const [editItem] = useMutation(EDIT_ITEM);
   const [checked, setChecked] = useState([0]);
-
-  const edititem = () => {
-    editItem({
-      variables: {
-        _id: id,
-        name: "test",
-        shopID: shopID,
-      },
-    }).then(() => window.location.reload());
-  };
 
   const deletethisitem = () => {
     const deleteConfirm = window.confirm(
@@ -114,20 +96,21 @@ export default function GroceryItem({ name, id, completed, ordered, shopID }) {
       <ListItemIcon>
         <Checkbox
           edge="start"
-          // checked={checked.indexOf(id) !== -1}
-          // tabIndex={-1}
-          // disableRipple
-          // inputProps={{ "aria-labelledby": labelId }}
+          checked={checked.indexOf(id) !== -1}
+          tabIndex={-1}
+          disableRipple
+          inputProps={{ "aria-labelledby": labelId }}
           onClick={markascompleted}
         />
       </ListItemIcon>
       <span>
         <SimpleModal
           OpenModal={
-            <IconButton onClick={edititem} edge="end" aria-label="ordered">
+            <IconButton edge="end" aria-label="ordered">
               <EditIcon />
             </IconButton>
           }
+          BodyModal={<EditItem id={id} name={name} shop={shop}></EditItem>}
         ></SimpleModal>
       </span>
       <ListItemText
@@ -138,18 +121,7 @@ export default function GroceryItem({ name, id, completed, ordered, shopID }) {
         id={labelId}
         primary={name}
       />
-      {/* {shop
-        ? shop.map((shop, key) => {
-            return <ListItemText id={key} key={key} primary={shop.name} />;
-          })
-        : null} */}
-
-
-
-
-      
       <ListItemSecondaryAction>
-        
         <IconButton onClick={markasordered} edge="end" aria-label="ordered">
           <LocalShippingIcon />
         </IconButton>
