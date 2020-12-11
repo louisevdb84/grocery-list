@@ -21,23 +21,22 @@ const DELETE_ITEM = gql`
 `;
 
 const UPDATE_COMPLETED = gql`
-  mutation updateCompletedItem($_id: String!) {
-    updateCompletedItem(_id: $_id) {
+  mutation updateCompletedItem($_id: String!, $completed: Boolean!) {
+    updateCompletedItem(_id: $_id, completed: $completed) {
       name
     }
   }
 `;
 
 const UPDATE_ORDERED = gql`
-  mutation updateOrderedItem($_id: String!) {
-    updateOrderedItem(_id: $_id) {
+  mutation updateOrderedItem($_id: String!, $ordered: Boolean!) {
+    updateOrderedItem(_id: $_id, ordered: $ordered) {
       name
     }
   }
 `;
 
 export default function GroceryItem({ name, id, completed, ordered }) {
-  console.log(completed, ordered, "STUFF");
   const [deleteItem] = useMutation(DELETE_ITEM);
   const [updateCompletedItem] = useMutation(UPDATE_COMPLETED);
   const [updateOrderedItem] = useMutation(UPDATE_ORDERED);
@@ -60,6 +59,7 @@ export default function GroceryItem({ name, id, completed, ordered }) {
     updateCompletedItem({
       variables: {
         _id: id,
+        completed: !completed,
       },
     }).then(() => window.location.reload());
   };
@@ -68,6 +68,7 @@ export default function GroceryItem({ name, id, completed, ordered }) {
     updateOrderedItem({
       variables: {
         _id: id,
+        ordered: !ordered,
       },
     }).then(() => window.location.reload());
   };
