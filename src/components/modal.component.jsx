@@ -49,7 +49,7 @@ export default function SimpleModal({ OpenModal, BodyModal }, props) {
   );
 
   return (
-    <div>
+    <>
       <span onClick={handleOpen}>{OpenModal}</span>
       {/* <button type="button" onClick={handleOpen}>
         Open Modal
@@ -63,6 +63,6 @@ export default function SimpleModal({ OpenModal, BodyModal }, props) {
         
         {body}
       </Modal>
-    </div>
+    </>
   );
 }

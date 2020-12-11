@@ -104,14 +104,7 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
         />
       </ListItemIcon>
       <span>
-        <SimpleModal
-          OpenModal={
-            <IconButton edge="end" aria-label="ordered">
-              <EditIcon />
-            </IconButton>
-          }
-          BodyModal={<EditItem id={id} name={name} shop={shop}></EditItem>}
-        ></SimpleModal>
+      
       </span>
       <ListItemText
         style={{
@@ -122,12 +115,21 @@ export default function GroceryItem({ name, id, completed, ordered, shop }) {
         primary={name}
       />
       <ListItemSecondaryAction>
+      <SimpleModal
+          OpenModal={
+            <IconButton edge="end" aria-label="ordered">
+              <EditIcon />
+            </IconButton>
+          }
+          BodyModal={<EditItem id={id} name={name} shop={shop}></EditItem>}
+        ></SimpleModal>
         <IconButton onClick={markasordered} edge="end" aria-label="ordered">
           <LocalShippingIcon />
         </IconButton>
         <IconButton onClick={deletethisitem} edge="end" aria-label="delete">
           <DeleteIcon />
         </IconButton>
+
       </ListItemSecondaryAction>
     </ListItem>
   );
